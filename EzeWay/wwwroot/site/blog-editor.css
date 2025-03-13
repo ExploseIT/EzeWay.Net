@@ -1,0 +1,192 @@
+﻿
+.editor-container {
+    max-width: 800px;
+    margin: 50px auto;
+    /*background: #fff;*/
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.editor-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+    .editor-header h1 {
+        font-size: 24px;
+    }
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .form-group input[type="text"],
+    .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .form-group textarea {
+        height: 200px;
+        resize: vertical;
+    }
+
+.editor-toolbar {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+    .editor-toolbar button {
+        padding: 10px 15px;
+        margin-right: 5px;
+        border: none;
+        background: #007BFF;
+        color: #fff;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .editor-toolbar button:last-child {
+            margin-right: 0;
+        }
+
+        .editor-toolbar button:hover {
+            background: #0056b3;
+        }
+
+.editor-text-content {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    /*background: #f9f9f9; */
+    min-height: 200px;
+}
+
+
+.submit-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background: #28a745;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+    .submit-btn:hover {
+        background: #218838;
+    }
+/*
+        ---------------------------------------------------------------------------
+    */
+.link-editor {
+    display: none;
+    position: absolute;
+    background: white;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+    .link-editor label {
+        display: block;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    .link-editor input {
+        width: 200px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        margin-bottom: 5px;
+    }
+
+    .link-editor button {
+        cursor: pointer;
+        padding: 5px 10px;
+        margin-top: 5px;
+        border: none;
+        background: #007bff;
+        color: white;
+        border-radius: 4px;
+    }
+
+        .link-editor button:hover {
+            background: #0056b3;
+        }
+
+        .link-editor button:last-child {
+            background: red;
+        }
+
+            .link-editor button:last-child:hover {
+                background: darkred;
+            }
+
+.floating-editor {
+    display: none;
+    position: absolute;
+    background: white;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+    .floating-editor label {
+        display: block;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    .floating-editor input {
+        width: 200px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        margin-bottom: 5px;
+    }
+
+    .floating-editor button {
+        cursor: pointer;
+        padding: 5px 10px;
+        margin-top: 5px;
+        border: none;
+        background: #007bff;
+        color: white;
+        border-radius: 4px;
+    }
+
+        .floating-editor button:hover {
+            background: #0056b3;
+        }
+
+        .floating-editor button:last-child {
+            background: red;
+        }
+
+            .floating-editor button:last-child:hover {
+                background: darkred;
+            }
+
+.blog-image {
+    max-width: 300px;
+    height: auto;
+    border-radius: 5px; /* Optional: Add rounded corners */
+    display: block; /* Ensures proper alignment */
+    //margin: 10px auto; /* Center the image */
+}

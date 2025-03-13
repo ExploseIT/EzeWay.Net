@@ -1,0 +1,71 @@
+﻿
+@using EzeWay.ef;
+
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+    mApp _mApp = @Model;
+    var iConf = _mApp.getSiteConf();
+
+    cPageData? _pd = _mApp._cPageData;
+
+    ViewData["Title"] = _pd?.pdContent("id_page_header");
+
+    var _ct = new cContact();
+    if (_mApp.bIsLocal)
+    {
+        var ctact_conf = iConf.GetSection("Contact_Temp");
+        if (bool.Parse(ctact_conf["ctactEnable"]!) == true)
+        {
+            _ct.ctactName = ctact_conf["ctactName"]!;
+            _ct.ctactPhone = ctact_conf["ctactPhone"]!;
+            _ct.ctactEmail = ctact_conf["ctactEmail"]!;
+            _ct.ctactSubject = ctact_conf["ctactSubject"]!;
+            _ct.ctactMessage = ctact_conf["ctactMessage"]!;
+        }
+    }
+}
+
+
+<div class="col-sm-6 p-5 pt-0">
+    <h1>Contact Us</h1>
+    <form class="" method="post" asp-action="ContactPost" class="needs-validation" novalidate>
+        <input type="hidden" id="ctactId" name="ctactId" value="@_ct.ctactId" />
+        <input type="hidden" id="ctactDTMessage" name="ctactId" value="@_ct.ctactDTMessage.ToString("yyyy/MM/ddThh:mm")" />
+
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control rounded-3" id="ctactName" name="ctactName" value="@(_ct.ctactName)" placeholder="Name">
+            <label for="ctactName">Name</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control rounded-3" id="ctactPhone" name="ctactPhone" value="@(_ct.ctactPhone)" placeholder="Phone">
+            <label for="ctactPhone">Phone</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control rounded-3" id="ctactEmail" name="ctactEmail" value="@(_ct.ctactEmail)" placeholder="name@example.com">
+            <label for="ctactEmail">Email address</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control rounded-3" id="ctactSubject" name="ctactSubject" value="@(_ct.ctactSubject)" placeholder="Subject">
+            <label for="ctactSubject">Subject</label>
+        </div>
+        <div class="form-floating mb-3">
+            <textarea class="form-control rounded-3" rows="2" id="ctactBody" name="ctactMessage" placeholder="Message">@(_ct.ctactMessage)</textarea>
+            <label for="ctactBody">Message</label>
+        </div>
+        <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Submit</button>
+        <hr class="my-4">
+@*         <h2 class="fs-5 fw-bold mb-3">Or use a third-party</h2>
+        <button class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3" type="submit">
+            <svg class="bi me-1" width="16" height="16"><use xlink:href="#twitter"></use></svg>
+            Sign up with Twitter
+        </button>
+        <button class="w-100 py-2 mb-2 btn btn-outline-primary rounded-3" type="submit">
+            <svg class="bi me-1" width="16" height="16"><use xlink:href="#facebook"></use></svg>
+            Sign up with Facebook
+        </button>
+        <button class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3" type="submit">
+            <svg class="bi me-1" width="16" height="16"><use xlink:href="#github"></use></svg>
+            Sign up with GitHub
+        </button> *@
+    </form>
+</div>

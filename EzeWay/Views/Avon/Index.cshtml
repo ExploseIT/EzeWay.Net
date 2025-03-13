@@ -1,0 +1,37 @@
+﻿
+@using EzeWay.ef;
+
+@{
+    Layout = "_Layout";
+
+    mApp _mApp = @Model;
+    ViewData["Title"] = "Item";
+
+    cProductData? _prd = _mApp._cProductData;
+}
+
+
+<main>
+    <div class="container col-xxl-8 px-4 py-1">
+        <div class="row flex-lg-row-reverse align-items-center g-5 py-1">
+            <div class="col-lg-6 text-center">
+                <img src="@Url.Content(_prd?.prdImageUrlDisplay())" class="d-block mx-lg-auto img-fluid" alt="@Html.Raw(_prd!.prdTitleDisplay())" width="700" loading="lazy">
+                <div class="d-grid gap-2 d-md-flex mt-2 justify-content-md-center">
+                    <small class="text-body-secondary">@Html.Raw("Price " + _prd?.prdPriceUKDisplay())</small>
+                </div>
+                <a class="btn btn-primary mt-2" href="@Html.Raw(_prd!.prdUrlCompany)" target="_blank">Order direct from @_prd.prdsName</a>
+            </div>
+            <div class="col-lg-6">
+                <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">@Html.Raw(_prd?.prdsName)</h1>
+                <h3 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">@Html.Raw(_prd?.prdTitleDisplay())</h3>
+                <p class="lead">
+                    @Html.Raw(_prd?.prdDescDisplay())
+                </p>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+
+

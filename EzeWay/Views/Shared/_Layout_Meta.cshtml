@@ -1,0 +1,17 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    mApp _mApp = @Model;
+    var _pd = _mApp._cPageData;
+}
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="keywords" content="@Html.Raw(_pd!.pdContent("meta_keywords"))" />
+<meta name="description" content="@Html.Raw(_pd!.pdContent("meta_description"))" />
+<meta name="author" content="@Html.Raw(_pd!.pdContent("meta_author"))">
+<meta name="generator" content="@Html.Raw(_pd!.pdContent("meta_generator"))">
+<link rel="shortcut icon" type='@(_pd!.pdContentMimeType("shortcut_icon"))' href="@Url.Content(_pd!.pdContent("shortcut_icon"))">
+<title>@Html.Raw(_pd!.pdContent("title"))</title>
+

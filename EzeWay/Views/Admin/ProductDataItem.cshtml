@@ -1,0 +1,155 @@
+﻿
+@using EzeWay.ef;
+
+@{
+    Layout = "/Views/Shared/_Layout_Admin.cshtml";
+
+    mApp _mApp = @Model;
+    //var _pd = _mApp.pdPageData();
+    var _prd = _mApp._cProductData;
+    var _prdsl = _mApp._prdsProductSources;
+    var _prdcl = _mApp._prdcProductCats;
+
+    ViewData["Title"] = "Admin";
+}
+
+
+<h2>Product Data</h2>
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3"></h4>
+    <form method="post" asp-action="ProductDataItemPost" class="needs-validation" novalidate>
+        <input type="hidden" name="prdId" value=@_prd!.prdId />
+        <input type="hidden" name="prdsName" value=@_prd!.prdsName />
+
+          <div class="row g-3">
+            
+              <div class="col-sm-4">
+                <label for="prdSource" class="form-label">Source</label>
+                <select class="form-select" id="prdSource" name="prdSource" required>
+                    @foreach(var _prds in _prdsl!)
+                    {
+                        if (_prds.prdsId == _prd.prdSource)
+                        {
+                            <option value="@(_prds.prdsId)" selected>@_prds.prdsName</option>
+                        }
+                        else
+                        {
+                            <option value="@(_prds.prdsId)">@_prds.prdsName</option>
+                        }
+                    }
+                </select>
+              </div> 
+            <div class="col-sm-4">
+                <label for="prdCategory" class="form-label">Category</label>
+                <select class="form-select" id="prdCategory" name="prdCategory" required>
+                    @foreach (var _prdc in _prdcl!)
+                    {
+                        if (_prdc.prdcId == _prd.prdCategory)
+                        {
+                            <option value="@(_prdc.prdcId)" selected>@_prdc.prdcName</option>
+                        }
+                        else
+                        {
+                            <option value="@(_prdc.prdcId)">@_prdc.prdcName</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <label for="prdCTA" class="form-label">Call To Action</label>
+                <input type="text" class="form-control" name="prdCTA" placeholder="" value='@_prd!.prdCTA' required>
+                <div class="invalid-feedback">
+                    CTA
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="prdEnabled" name="prdEnabled" @_prd.prdEnabled_CB() value="true">
+                    <label class="form-check-label" for="prdEnabled">
+                        Enabled
+                    </label>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="prdFeatured" name="prdFeatured"  @_prd.prdFeatured_CB() value="true">
+                    <label class="form-check-label" for="prdFeatured">
+                        Featured
+                    </label>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="prdIsLive" name="prdIsLive" @_prd.prdIsLive_CB() value="true">
+                    <label class="form-check-label" for="prdIsLive">
+                        Is live
+                    </label>
+                </div>
+            </div>
+            <div class="col-12">
+              <label for="prdTitle" class="form-label">Title</label>
+                <textarea rows="3" class="form-control" name="prdTitle" placeholder="Title" required>@_prd!.prdTitle</textarea>
+                @* <input type="text" class="form-control" name="prdTitle" placeholder="" value='@_prd!.prdTitle' required> *@
+              <div class="invalid-feedback">
+                Title is required
+              </div>
+            </div>
+            <div class="col-12">
+                <label for="prdUrl" class="form-label">Url</label>
+                <input type="text" class="form-control" name="prdUrl" placeholder="" value='@_prd!.prdUrl'>
+                <div class="invalid-feedback">
+                    Url
+                </div>
+            </div>
+            <div class="col-12">
+                <label for="prdImageUrl" class="form-label">Image Url</label>
+                <input type="text" class="form-control" name="prdImageUrl" placeholder="" value='@_prd!.prdImageUrl'>
+                <div class="invalid-feedback">
+                   Image Url
+                </div>
+            </div>
+            <div class="col-4">
+                <img src="@Url.Content(_prd.prdImageUrlDisplay())" class="prd_img card-img-top" alt="@Html.Raw(_prd.prdsName)">
+            </div>
+            <div class="col-12">
+                <label for="prdUrlCompany" class="form-label">Company Url</label>
+                <div class="input-group has-validation">
+                    <textarea rows="3" class="form-control" name="prdUrlCompany" placeholder="Company Url" required>@_prd!.prdUrlCompany</textarea>
+                    <div class="invalid-feedback">
+                        Company Url
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+              <label for="prdDesc" class="form-label">Description</label>
+              <div class="input-group has-validation">
+                    <textarea rows="10" class="form-control" name="prdDesc" placeholder="Value" required>@_prd!.prdDesc</textarea>
+              <div class="invalid-feedback">
+                  Description is required
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+                <label for="prdPriceUK" class="form-label">Price UK</label>
+                <input type="text" class="form-control" name="prdPriceUK" placeholder="" value='@_prd!.prdPriceUK'>
+                <div class="invalid-feedback">
+                    Price UK
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <label for="prdPriceUEuro" class="form-label">Price Euro</label>
+                <input type="text" class="form-control" name="prdPriceEuro" placeholder="" value='@_prd!.prdPriceEuro'>
+                <div class="invalid-feedback">
+                    Price Euro
+                </div>
+            </div>
+            <div class="col-4">
+                <button class="w-100 btn btn-primary btn-lg" type="submit">Update</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+

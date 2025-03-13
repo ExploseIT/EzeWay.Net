@@ -1,0 +1,392 @@
+﻿@using EzeWay.ef
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "/Views/Shared/_Layout_Admin.cshtml";
+    mApp _mApp = @Model;
+    var iConf = _mApp.getSiteConf();
+
+    var _blog = new cBlog();
+    if (_mApp.bIsLocal)
+    {
+        var _conf = iConf.GetSection("Blog_Temp");
+        if (bool.Parse(_conf["Blog_Enable"]!) == true)
+        {
+            _blog.blog_title = _conf["blog_title"]!;
+            _blog.blog_content = _conf["blog_content"]!;
+        }
+
+    }
+    Guid blog_id = Guid.Empty;
+
+    if (Guid.TryParse(_mApp._c_rd!.rd_id, out blog_id))
+    {
+        _blog.blog_id = blog_id;
+    }
+
+    if (_mApp._cBlog != null)
+    {
+        _blog = _mApp._cBlog;
+    }
+}
+
+@* 
+    <title>Blog Editor</title> *@
+
+<div id="linkEditor" class="link-editor">
+    <label>URL:</label>
+    <input type="text" id="linkInput" placeholder="Enter URL" />
+    <label>Text:</label>
+    <input type="text" id="linkTextInput" placeholder="Enter link text" />
+    <button onclick="applyLink()">Apply</button>
+    <button onclick="removeLink()">Remove</button>
+</div>
+<!-- Floating Image Editor -->
+<div id="imageEditor" class="floating-editor">
+    <label>Image URL:</label>
+    <input type="text" id="imageUrlInput" placeholder="Enter Image URL" />
+
+    <label>Alt Text:</label>
+    <input type="text" id="imageAltInput" placeholder="Enter Image Description" />
+
+    <button onclick="applyImage()">Apply</button>
+    <button onclick="removeImage()">Remove</button>
+</div>
+
+<div class="editor-container">
+    <div class="editor-header">
+        <h1>Blog Editor</h1>
+    </div>
+    <form class="" method="post" asp-action="BlogPost" class="needs-validation" novalidate>
+        <input type="hidden" id="blog_id" name="blog_id" value="@_blog.blog_id" />
+        <div class="form-group">
+            <label for="blog_title">Blog Title</label>
+            <input type="text" id="blog_title" name="blog_title" placeholder="Enter your blog title" value="@_blog.blog_title" required />
+        </div>
+        <div class="form-group">
+            <label for="blog_url">Blog Url</label>
+            <input type="text" id="blog_ur" name="blog_url" placeholder="Blog url" value="@_blog.blog_url" required />
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-6">
+                <label for="prdSource" class="form-label">Source</label>
+                <select class="form-select" id="blog_status" name="blog_status" required>
+                    @foreach (var _blgs in _mApp._cBlogStatuses!)
+                    {
+                        if (_blog.blog_status == _blgs.blgs_id)
+                        {
+                            <option value="@(_blgs.blgs_id)" selected>@_blgs.blgs_name</option>
+                        }
+                        else
+                        {
+                            <option value="@(_blgs.blgs_id)">@_blgs.blgs_name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-sm-3">
+                <label class="form-label">Order</label>
+                <input class="form-control" type="number" id="blgo_index" name="blgo_index" value="@_blog.blgo_index" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="content">Blog Content</label>
+            <div class="editor-toolbar">
+                <button type="button" onclick="format('bold')" title="Bold">
+                    <i class="bi bi-type-bold"></i>
+                </button>
+                <button type="button" onclick="format('italic')" title="Italic">
+                    <i class="bi bi-type-italic"></i>
+                </button>
+                <button type="button" onclick="format('underline')" title="Underline">
+                    <i class="bi bi-type-underline"></i>
+                </button>
+                <button type="button" onclick="format('insertUnorderedList')" title="Bullet List">
+                    <i class="bi bi-list-ul"></i>
+                </button>
+                <button type="button" onclick="format('insertOrderedList')" title="Numbered List">
+                    <i class="bi bi-list-ol"></i>
+                </button>
+                <button type="button" onclick="insertLink()" title="Insert Link">
+                    <i class="bi bi-link"></i>
+                </button>
+                <button type="button" onclick="insertImage()" title="Insert Image">
+                    <i class="bi bi-file-image"></i>
+                </button>
+            </div>
+            <div contenteditable="true" id="id_blog_content" class="editor-text-content">@Html.Raw(ImageHelper.ProcessImageUrls(_mApp, _blog.blog_content))</div>
+            <textarea id="blog_content" name="blog_content" style="display:none;"></textarea>
+        </div>
+        <button type="submit" onclick="prepareForm()" class="submit-btn">Submit Blog</button>
+    </form>
+</div>
+
+
+
+<script>
+        function prepareForm() {
+        const contentDiv = document.getElementById("id_blog_content");
+        const hiddenContent = document.getElementById("blog_content");
+
+        // Copy the content from the contenteditable div to the hidden textarea
+        hiddenContent.value = contentDiv.innerHTML;
+    }
+        function format(command) {
+            document.execCommand(command, false, null);
+        }
+
+        function submitBlog() {
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').innerHTML;
+
+            if (!title.trim() || !content.trim()) {
+                alert('Please provide both a title and content for the blog.');
+                return;
+            }
+
+            // Example: Log the blog post to the console (replace with API call in production)
+            console.log({
+                title,
+                content
+            });
+
+            alert('Blog submitted successfully!');
+            document.getElementById('blogForm').reset();
+            document.getElementById('content').innerHTML = '';
+        }
+
+        function insertLink3() {
+            let url = prompt("Enter the URL:");
+            if (url) {
+                document.execCommand("createLink", false, url);
+            }
+        }
+
+        function insertLink2() {
+            let selection = document.getSelection();
+            let range = selection.getRangeAt(0);
+
+            if (selection.toString().trim().length > 0) {
+                let url = prompt("Enter the URL:");
+                if (url) {
+                    let link = document.createElement("a");
+                    link.href = url;
+                    link.target = "_blank";
+                    link.textContent = selection.toString();
+
+                    range.deleteContents();
+                    range.insertNode(link);
+                }
+            } else {
+                alert("Please select text to hyperlink.");
+            }
+        }
+
+        /*
+                const modalLinkEditor = document.getElementById('link_editor');
+                myModal.show(modalLinkEditor);
+        */
+
+    let savedRange = null; // Store selection range
+
+    document.addEventListener('mouseup', function (event) {
+        window.lastMouseUpEvent = event; // Store last event for reference
+    });
+
+    function insertLink() {
+        event.preventDefault(); // Prevent default right-click menu
+
+        let selection = document.getSelection();
+        if (!selection.rangeCount) return;
+
+        let range = selection.getRangeAt(0);
+        let selectedText = selection.toString().trim();
+        let linkEditor = document.getElementById("linkEditor");
+
+        if (selectedText.length > 0) {
+            let existingLink = selection.anchorNode.parentElement.closest('a');
+            let linkInput = document.getElementById("linkInput");
+            let linkTextInput = document.getElementById("linkTextInput");
+
+            if (existingLink) {
+                linkInput.value = existingLink.href; // Prefill input with existing URL
+                linkTextInput.value = existingLink.textContent;
+            } else {
+                linkInput.value = "";
+                linkTextInput.value = selectedText;
+            }
+
+            // Save the current selection range
+            savedRange = range;
+
+            // Position editor near the mouse cursor
+            linkEditor.style.left = `${event.pageX}px`;
+            linkEditor.style.top = `${event.pageY}px`;
+            linkEditor.style.display = "block";
+        } else {
+            linkEditor.style.display = "none"; // Hide if no selection
+        }
+    }
+
+    function restoreSelection() {
+        if (savedRange) {
+            let selection = document.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(savedRange);
+        }
+    }
+
+    function applyLink() {
+        restoreSelection(); // Restore original selection before applying changes
+
+        let url = document.getElementById("linkInput").value.trim();
+        let text = document.getElementById("linkTextInput").value.trim();
+        if (!url || !text) return;
+
+        let selection = document.getSelection();
+        let range = savedRange;
+        let existingLink = selection.anchorNode.parentElement.closest('a');
+
+        if (existingLink) {
+            // If it's an existing link, update its href and text
+            existingLink.href = url;
+            existingLink.textContent = text;
+        } else {
+            // Create a new link
+            let link = document.createElement("a");
+            link.href = url;
+            link.target = "_blank";
+            link.textContent = text;
+
+            range.deleteContents();
+            range.insertNode(link);
+        }
+
+        document.getElementById("linkEditor").style.display = "none";
+    }
+
+    function removeLink() {
+        restoreSelection(); // Restore selection before removing link
+
+        let selection = document.getSelection();
+        let existingLink = selection.anchorNode.parentElement.closest('a');
+        if (existingLink) {
+            let textNode = document.createTextNode(existingLink.textContent);
+            existingLink.replaceWith(textNode);
+        }
+
+        document.getElementById("linkEditor").style.display = "none";
+    }
+
+
+    function findImageInSelection(selection) {
+        let node = selection.anchorNode;
+
+        // If the selected node itself is an image
+        if (node.nodeType === Node.ELEMENT_NODE && node.tagName === "IMG") {
+            return node;
+        }
+
+        // Traverse upwards to find a parent <img>
+        let parentImage = node.parentElement?.closest("img");
+        if (parentImage) return parentImage;
+
+        // Check if the selection is inside a container that has an <img> child
+        let range = selection.getRangeAt(0);
+        let fragment = range.cloneContents(); // Clone the selected content
+
+        let childImage = fragment.querySelector("img"); // Look for <img> in children
+        if (childImage) return childImage;
+
+        return null; // No image found
+    }
+
+        let savedRangeImage = null; // Store selection range for restoring
+    let selectedImage = null; // Store the clicked image
+
+    function insertImage() {
+        let selection = document.getSelection();
+        if (!selection.rangeCount) return;
+
+        let range = selection.getRangeAt(0);
+        savedRangeImage = range; // Save the current selection range
+
+        let imageEditor = document.getElementById("imageEditor");
+        let imageUrlInput = document.getElementById("imageUrlInput");
+        let imageAltInput = document.getElementById("imageAltInput");
+
+        // Find an <img> in the selection
+        selectedImage = findImageInSelection(selection);
+
+        if (selectedImage) {
+            // If an image is selected, pre-fill the fields
+            imageUrlInput.value = selectedImage.src;
+            imageAltInput.value = selectedImage.alt;
+        } else {
+            // Otherwise, clear inputs for a new image
+            imageUrlInput.value = "";
+            imageAltInput.value = "";
+        }
+
+        // Position the floating editor near the button
+        let button = document.querySelector('[onclick="insertImage()"]');
+        let rect = button.getBoundingClientRect();
+
+        imageEditor.style.left = `${rect.left + window.scrollX}px`;
+        imageEditor.style.top = `${rect.bottom + window.scrollY + 10}px`;
+        imageEditor.style.display = "block";
+    }
+
+    function restoreSelection() {
+        if (savedRangeImage) {
+            let selection = document.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(savedRangeImage);
+        }
+    }
+
+    function applyImage() {
+        let imageUrl = document.getElementById("imageUrlInput").value.trim();
+        let imageAlt = document.getElementById("imageAltInput").value.trim();
+        if (!imageUrl) return;
+
+        if (selectedImage) {
+            // If an existing image is selected, update its src and alt
+            selectedImage.src = imageUrl;
+            selectedImage.alt = imageAlt;
+        } else {
+            // Otherwise, insert a new image at the saved selection
+            restoreSelection();
+
+            let img = document.createElement("img");
+            img.src = imageUrl;
+            img.alt = imageAlt;
+            img.classList.add("blog-image");
+            //img.style.maxWidth = "100%"; // Prevent oversized images
+
+            let selection = document.getSelection();
+            let range = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
+
+            if (range) {
+                range.deleteContents();
+                range.insertNode(img);
+            }
+        }
+
+        document.getElementById("imageEditor").style.display = "none";
+    }
+
+    function removeImage() {
+        if (selectedImage) {
+            selectedImage.remove(); // Remove the selected image
+        }
+
+        document.getElementById("imageEditor").style.display = "none";
+    }
+
+
+
+</script>
+
+

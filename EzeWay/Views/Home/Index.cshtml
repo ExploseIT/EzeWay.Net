@@ -1,0 +1,226 @@
+﻿
+@using EzeWay.ef;
+
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+    mApp _mApp = @Model;
+
+    var _blogs = _mApp._cBlogs;
+
+    cPageData? _pd = _mApp._cPageData;
+
+    //List<c_featuredproduct>? _FPs = _mApp.fpFeaturedProductList();
+    Dictionary<Guid, List<cProductData>>? _prdll = _mApp._cProductDatas;
+    var _prd_grp = _prdll!.GroupBy(prd => prd.Key).ToList();
+    string carousel_active = "active";
+    ViewData["Title"] = _pd?.pdContent("id_page_header");
+
+}
+
+
+<!-- Navigation Bar -->
+
+<div class="toast-container position-fixed top-50 start-50 translate-middle p-3">
+    <div id="toast_beingupdated" class="toast" data-bs-delay="10000" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            @* <img src="..." class="rounded me-2" alt="..."> *@
+            <strong class="me-auto">EzeWay</strong>
+            <small></small>
+            <button id="toast_beingupdated_close" type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Apologies - This feature is currently being updated.<br />
+            This will be back soon.
+        </div>
+    </div>
+</div>
+
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container">
+        <!--
+        <h1>Shop, Save, or Start Your Own Business!</h1>
+        <p>Explore products, deals, and flexible income opportunities all in one place.</p>
+        <a href="#categories" class="btn btn-primary">Shop Now</a>
+        <a href="#business-opportunities" class="btn btn-secondary">Join Us</a>
+        -->
+    </div>
+</div>
+
+<div class="container mb-1">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="blog_content_see_more_dis">
+                @if (_blogs != null)
+                {
+                    @Html.Raw(ImageHelper.ProcessImageUrls(_mApp, _blogs.First()!.blog_content))
+                    <a href="#" class="see-more-link d-none">Read more</a>
+                }
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <h4>Recent articles</h4>
+            <ul class="list-group">
+                @foreach (cBlog _blog in _blogs!)
+                {
+                <li class="list-group-item">
+                    <a href="@Url.Content($"~/blog/{_blog.blog_url}")" class="text-decoration-none h6">
+                        @Html.Raw(_blog!.blog_title)
+                    </a>
+                </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="categories" class="container my-1">
+    <!--
+    <h2 class="text-center mb-4">Our Featured Categories</h2>
+    -->
+    <div class="row g-4">
+        @if (_prdll != null)
+        {
+            <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1" aria-current="true"></button>
+                    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
+
+                </div>
+
+                <div class="carousel-inner">
+                    @foreach (List<cProductData> _prdl in _prdll!.Values)
+                    {
+                        var _prds = _prdl.First();
+                        <div class="carousel-item @carousel_active">
+                            @{
+                                carousel_active = "";
+                            }
+                            <div class="row">
+                            <div class="col-12">
+                                <h4 class="text-center">@_prds.prdsName - @_prds.prdcName</h4>
+                            </div>
+                            @foreach (cProductData _prd in _prdl)
+                            {
+                            <div class="col-md-3">
+                                <div class="card category-card prd_card" data-id="@Html.Raw(_prd.prdId)" data-imageurl="@Url.Content(_prd.prdImageUrlDisplay())" data-desc="@Html.Raw(_prd.prdDescDisplay())"
+                                     data-title="@Html.Raw(_prd.prdTitleDisplay())" data-priceuk="@Html.Raw(_prd.prdPriceUKDisplay())" data-producturl="@Html.Raw(_prd.prdUrl)" data-cta="@Html.Raw(_prd.prdCTA)">
+                                    <img src="@Url.Content(_prd.prdImageUrlDisplay())" class="prd_img card-img-top" alt="@Html.Raw(_prd.prdsName)">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@Html.Raw(_prd.prdsName)</h5>
+                                        <p class="card-text">@Html.Raw(_prd.prdTitleDisplay())</p>
+                                        <div><small class="text-body-secondary">@Html.Raw("Price " + _prd.prdPriceUKDisplay())</small></div>
+                                        <!--a href="@Html.Raw(_prd.prdUrl)" target="_blank" name="@Html.Raw($"btn_prd_{_prd.prdId}")" class="btn_ga btn_toast_bypass btn btn-primary">@Html.Raw(_prd.prdCTA)</a-->
+                                        <a href="@Url.Content(_prd.prdUrlRelDisplay())" target="_self" name="@Html.Raw($"btn_prd_{_prd.prdId}")" class="btn_ga btn_toast_bypass btn btn-primary">@Html.Raw("View this item")</a>
+                                    </div>
+                                </div>
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    }
+                </div>
+               
+                <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+         }
+        </div>
+    </div>
+
+    <!-- Business Opportunities -->
+    <div id="business-opportunities" class="container my-5">
+        <h2 class="text-center mb-4">Start Your Own Business with Us</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Join Avon</h5>
+                        <p class="card-text">Earn on your terms as an Avon Representative.</p>
+                        <a href="#" name="btn_biz_avon" class="btn_ga btn btn-secondary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">VivaMK Business</h5>
+                        <p class="card-text">Be your own boss with VivaMK opportunities.</p>
+                    <a href="#" name="btn_biz_vivamk" class="btn_ga btn btn-secondary">Discover More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Utility Warehouse</h5>
+                        <p class="card-text">Help others save while you earn rewards.</p>
+                        <a href="#" name="btn_biz_uw" class="btn_ga btn btn-secondary">Partner Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<div class="modal fade" id="modalProduct" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header p-5 pb-4 border-bottom-0">
+                <h3 id="mod_prd_title" class="fw-bold mb-0 fs-2">Avon product title</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-5 pt-0">
+                <div>
+                    <img id="mod_prd_imageurl" style="width:100%" src="" />
+                </div>
+                <div class="form-floating mb-3">
+                    <div id="mod_prd_desc" class="rounded-3"></div>
+                </div>
+                <div class="form-floating mb-3">
+                    <small id="mod_prd_priceuk" class="text-body-secondary"></small>
+                </div>
+                <div class="form-floating mb-3">
+                    <a id="mod_prd_cta" href="" name="" target="_blank" class="btn_ga btn_toast_bypass btn btn-primary"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const seeMoreLink = document.querySelector('.see-more-link');
+        const contentContainer = document.querySelector('.blog_content_see_more');
+
+        seeMoreLink.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            // Option 1: Expand content
+            if (contentContainer.classList.contains('expanded')) {
+                contentContainer.classList.remove('expanded');
+                contentContainer.style.maxHeight = '300px';
+                seeMoreLink.textContent = 'Click to see more';
+            } else {
+                contentContainer.classList.add('expanded');
+                contentContainer.style.maxHeight = 'none';
+                seeMoreLink.textContent = 'Read less';
+            }
+        });
+
+        // Option 2: Redirect to blog URL
+        const blogUrl = 'https://ezeway.co.uk/amazon/amazon_warmer_electric_heated_throw_blanket';
+        seeMoreLink.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+            window.location.href = blogUrl;
+        });
+    });
+</script>
+

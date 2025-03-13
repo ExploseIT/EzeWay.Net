@@ -1,0 +1,46 @@
+﻿
+@using EzeWay.ef;
+
+@{
+    Layout = "/Views/Shared/_Layout_Admin.cshtml";
+
+    mApp _mApp = @Model;
+    var _blogs = _mApp._cBlogs;
+
+
+    ViewData["Title"] = "Admin";
+}
+
+<h2>Blog List</h2>
+<div class="table-responsive small">
+    <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Title</th>
+                <th scope="col">Status</th>
+                <th scope="col">Content</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="@Url.Content($"~/admin/blog-edit/{Guid.Empty}")" class="link-secondary"> <svg class="bi"><use xlink:href="#plus-circle" /></svg></a></td>
+                <td>New product</td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            @foreach (var _blog in _blogs!)
+            {
+                <tr>
+                    <td><a href="@Url.Content($"~/admin/blog-edit/{_blog.blog_id}")" class="link-secondary"> <svg class="bi"><use xlink:href="#plus-circle" /></svg></a></td>
+                    <td>@Html.Raw(_blog.blog_title_Short(20))</td>
+                    <td>@Html.Raw(_blog.blgs_name)</td>
+                    <td>@Html.Raw(_blog.blog_content_SanitizedShort(20))</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+

@@ -1,0 +1,139 @@
+﻿
+
+@using EzeWay.ef;
+
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+    mApp _mApp = @Model;
+
+    ViewData["Title"] = "Avon Book Request";
+}
+
+
+@* <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avon Catalogue Request</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .hero-section {
+          background: linear-gradient(to right, #f8f9fa, #e9ecef);
+          padding: 40px 0;
+          text-align: center;
+        }
+        .hero-section h1 {
+          font-size: 2.5rem;
+          font-weight: bold;
+        }
+        .form-section {
+          padding: 40px 20px;
+        }
+        .btn-primary {
+          background-color: #c3007a; /* Avon pink */
+          border: none;
+        }
+        .btn-primary:hover {
+          background-color: #a50066;
+        }
+        .footer {
+          background-color: #343a40;
+          color: white;
+          padding: 20px 0;
+        }
+        .footer a {
+          color: #ddd;
+          text-decoration: none;
+        }
+        .footer a:hover {
+          color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">EzeWay</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Shop</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Business Opportunities</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+ *@
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container">
+        <h1>Request Your Free Avon Catalogue</h1>
+        <p>Fill in your details below to have an Avon catalog delivered to your doorstep!</p>
+    </div>
+</div>
+
+<!-- Form Section -->
+<div class="form-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form id="catalogueForm">
+                    <div class="mb-3">
+                        <label for="fullName" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="fullName" placeholder="Enter your name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Delivery Address</label>
+                        <input type="text" class="form-control" id="address" placeholder="Enter your address" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="postcode" class="form-label">Postcode</label>
+                        <input type="text" class="form-control" id="postcode" placeholder="Enter your postcode" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="mobile" class="form-label">Mobile Number</label>
+                        <input type="tel" class="form-control" id="mobile" placeholder="Enter your mobile number" required>
+                        <small class="form-text text-muted">We will use this number to verify your request via SMS.</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address (Optional)</label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter your email address">
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="marketingConsent">
+                        <label class="form-check-label" for="marketingConsent">I agree to receive updates and offers from EzeWay.</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Request Catalogue</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@* 
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container text-center">
+            <p>&copy; 2024 EzeWay. All Rights Reserved.</p>
+            <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Basic form handling
+        document.getElementById('catalogueForm').addEventListener('submit', function (e) {
+          e.preventDefault();
+          alert('Thank you for your request! We will contact you shortly for verification.');
+          // Add API integration or SMS verification logic here
+        });
+    </script>
+</body>
+</html>
+ *@
+

@@ -1,0 +1,63 @@
+﻿
+@using EzeWay.ef;
+
+@{
+    Layout = "/Views/Shared/_Layout_Admin.cshtml";
+
+    mApp _mApp = @Model;
+    //var _pd = _mApp._cPageData;
+    var _pc = _mApp._cPageContent;
+    var _pds = _mApp._cPageDatas;
+    ViewData["Title"] = "Admin";
+}
+
+
+<h2>App Contents</h2>
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3"></h4>
+    <form method="post" asp-action="AppContentPost" class="needs-validation" novalidate>
+        <input type="hidden" id="pc_id" name="pc_id" value=@_pc!.pc_id />
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label for="pc_name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="pc_name" name="pc_name" placeholder="" value=@_pc!.pc_name required>
+              <div class="invalid-feedback">
+                Valid name is required.
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+                <label for="prdSource" class="form-label">Source</label>
+                <select class="form-select" id="pc_pdpd_id" name="pc_pdpd_id" required>
+                    @foreach (var _pd in _pds!)
+                    {
+                        if (_pc.pc_pdpd_id == _pd.pd_id)
+                        {
+                            <option value="@(_pd.pd_id)" selected>@_pd.pd_page</option>
+                        }
+                        else
+                        {
+                            <option value="@(_pd.pd_id)">@_pd.pd_page</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="col-12">
+              <label for="pc_value" class="form-label">Value</label>
+              <div class="input-group has-validation">
+                    <textarea class="form-control" id="pc_value" name="pc_value" placeholder="Value" required>@_pc!.pc_value</textarea>
+              <div class="invalid-feedback">
+                  A value is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-4">
+                <button class="w-100 btn btn-primary btn-lg" type="submit">Update</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+

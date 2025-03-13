@@ -1,0 +1,114 @@
+﻿
+body {
+    padding-top: 1rem;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel-item {
+    height: 40rem;
+}
+
+.carousel-control-next-icon, .carousel-control-prev-icon {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 100% 100%;
+}
+
+.carousel-control-next, .carousel-control-prev {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5%;
+    height: 15%;
+    padding: 0;
+    color: #fff;
+    text-align: center;
+    background: 0 0;
+    border: 0;
+    opacity: .5;
+    transition: opacity .15s ease;
+}
+
+
+/* Declare heights because of positioning of img element */
+.carousel-item {
+    height: auto;
+}
+
+.carousel-inner .row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.carousel-inner .col-md-3 {
+    flex: 0 0 25%; /* Default: 4 items per row */
+    max-width: 25%;
+    padding: 10px; /* Add spacing between items */
+}
+
+/* Medium screens (2 items per row) */
+@media (max-width: 768px) {
+    .carousel-inner .col-md-3 {
+        flex: 0 0 50%; /* 2 items per row */
+        max-width: 50%;
+    }
+    .carousel-item {
+        height: auto;
+    }
+}
+
+/* Small screens (1 item per row) */
+@media (max-width: 576px) {
+    .carousel-inner .col-md-3 {
+        flex: 0 0 100%; /* 1 item per row */
+        max-width: 100%;
+    }
+    .carousel-item {
+        height: auto;
+    }
+}
+
+.css_circle_icon {
+    height: 30px;
+    width: 30px;
+    background-color: #557;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.css_icon {
+    margin-left: 8px;
+    margin-top: 6px;
+    color: #fff;
+}
+
+
+.blog_content_see_more {
+    max-height: 300px; /* Adjust based on desired visible height */
+    overflow: hidden;
+    position: relative;
+}
+
+.see-more-link {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: #007bff;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+    .see-more-link:hover {
+        background: #0056b3;
+    }
+

@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# SQL Server Management Studio Solution File, Format Version 20.00
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "EzeWay_1.0.1.0", "EzeWay_1.0.1.0\EzeWay_1.0.1.0.ssmssqlproj", "{6B3E55C6-E61E-46D7-96CF-EDB37EAD23C0}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "EzeWay_sql_tests", "EzeWay_sql_tests\EzeWay_sql_tests.ssmssqlproj", "{24C08390-6D34-4AD3-9E5A-7F0F0C137791}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "EzeWay_sql_setup", "EzeWay_sql_setup\EzeWay_sql_setup.ssmssqlproj", "{4D361BBB-2E34-42DE-ACB1-98604874E900}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Default|Default = Default|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B3E55C6-E61E-46D7-96CF-EDB37EAD23C0}.Default|Default.ActiveCfg = Default
+		{4F8A97E6-1DD0-4503-894E-11562D29584A}.Default|Default.ActiveCfg = Default
+		{24C08390-6D34-4AD3-9E5A-7F0F0C137791}.Default|Default.ActiveCfg = Default
+		{4D361BBB-2E34-42DE-ACB1-98604874E900}.Default|Default.ActiveCfg = Default
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F980C5CA-6BE0-4201-B61E-1E78E30A6B46}
+	EndGlobalSection
+EndGlobal
