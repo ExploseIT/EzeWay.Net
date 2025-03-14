@@ -201,6 +201,12 @@ namespace EzeWay.ef
         }
 
 
+        public void blogLocaliseUrls(string url, string vdir)
+        {
+            this.blog_content = Regex.Replace(this.blog_content, Regex.Escape(url)+"/"+vdir, "[url]/"+vdir, RegexOptions.IgnoreCase);
+            this.blog_content = Regex.Replace(this.blog_content, Regex.Escape(url), "[url]", RegexOptions.IgnoreCase);
+        }
+
         public string blogTitleToUrl()
         {
             string ret = "";
@@ -257,7 +263,8 @@ namespace EzeWay.ef
                 else
                 {
                     // Convert relative URLs using @Url.Content()
-                    string newUrl = $"{_mApp.mUrl}{imgUrl}";
+                    //string newUrl = $"{_mApp.mUrl}{imgUrl}";
+                    string newUrl = ("" + imgUrl).Replace("[url]",_mApp.mUrl);
                     return imgTag.Replace(imgUrl, newUrl);
                 }
             }, RegexOptions.IgnoreCase);

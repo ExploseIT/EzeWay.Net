@@ -35,6 +35,7 @@ namespace EzeWay.Controllers
 
             mApp _m_App = new mApp(_hc, this.Request, this.RouteData, _dbCon, _conf, _env);
             _blog.blogTitleToUrl();
+            _blog.blogLocaliseUrls(_m_App.mUrl!,_m_App.mVDir!);
             _blog = new ent_blog(_dbCon).doBlogUpdate(_blog);
             _m_App._cBlog = _blog;
             return RedirectToAction("BlogEdit", new { id = _blog.blog_id });

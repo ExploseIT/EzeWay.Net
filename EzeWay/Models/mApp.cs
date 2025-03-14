@@ -128,6 +128,7 @@ namespace EzeWay.Models
             IConfigurationSection cs = conf.GetSection("FileInfo:FilePath");
             if (cs != null)
             {
+                this.mVDir = cs.Value!;
                 this.siteDataPathName = cs.Value!;
                 bool success = GetDataPath(env.ContentRootPath, cs.Value!, out this.site_datapath, out this.site_rootpath);
             }
@@ -380,12 +381,14 @@ namespace EzeWay.Models
         public ent_user? mUser { get; set; } = null;
         public IIdentity? mIdentity { get; set; } = null;
 
-        public string mUrl { get; set; } = null;
-        public string mPath { get; set; } = null;
-        public string mVersion { get; set; } = null;
-        public ent_userandroles_success e_User { get; set; } = null;
 
-        public List<cSetting> _m_settings_all { get; set; } = null;
+        public string? mVDir { get; set; } = null;
+        public string? mUrl { get; set; } = null;
+        public string? mPath { get; set; } = null;
+        public string? mVersion { get; set; } = null;
+        public ent_userandroles_success? e_User { get; set; } = null;
+
+        public List<cSetting>? _m_settings_all { get; set; } = null;
     }
 
     public class cBrowserDetails

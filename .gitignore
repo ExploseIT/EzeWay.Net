@@ -8,7 +8,7 @@ EzeWay/wwwroot/dist
 
 # sql folders with sensitive data
 EzeWay_sql/EzeWay_sql_sln/EzeWay_sql_bulk/
-EzeWay_sql/EzeWay_sql_sln/EzeWay_sql_tests/
+# EzeWay_sql/EzeWay_sql_sln/EzeWay_sql_tests/
 
 # EzeWay asset folders
 EzeWay_assets/

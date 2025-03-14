@@ -125,6 +125,8 @@
 
 
 <script>
+        var mUrl = '@(_mApp.mUrl)';
+
         function prepareForm() {
         const contentDiv = document.getElementById("id_blog_content");
         const hiddenContent = document.getElementById("blog_content");
@@ -347,7 +349,7 @@
     }
 
     function applyImage() {
-        let imageUrl = document.getElementById("imageUrlInput").value.trim();
+        let imageUrl = document.getElementById("imageUrlInput").value.trim().toLowerCase();
         let imageAlt = document.getElementById("imageAltInput").value.trim();
         if (!imageUrl) return;
 
