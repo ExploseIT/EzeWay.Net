@@ -34,8 +34,8 @@ Since being made public, the commit history has been restarted.
 
 1. **Clone the Repository**:
 
-   git clone https://github.com/exploseit/explose.net.git
+   git clone https://github.com/exploseit/ezeway.net.git
    
-   cd explose.net
+   cd ezeway.net
 
    
